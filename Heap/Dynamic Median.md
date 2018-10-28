@@ -1,5 +1,6 @@
 //最大堆与最小堆
 
+```c
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -56,3 +57,4 @@ int main(){
 	}
     return 0;
 }
+```
