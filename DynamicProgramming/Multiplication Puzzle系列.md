@@ -62,6 +62,7 @@ int main(){
 			if (j > n) break;
 			for (int k = i; k <= j; k++){
 				int temp = 0;
+				//多了一个边界的判断
 				if (i-1 >= 1 && j+1 <= n){
 					temp += num[i-1]*num[k]*num[j+1];
 					if (k-1 >= i)
