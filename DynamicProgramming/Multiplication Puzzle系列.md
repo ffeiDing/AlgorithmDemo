@@ -1,3 +1,37 @@
+# Burst Balloons 两端的可以取
+```c
+class Solution {
+public:
+    int maxCoins(vector<int>& nums) {
+        int len = nums.size();
+        int num[len+2];
+        if (len == 0)
+            return 0;
+        num[0] = 1;
+        num[len+1] = 1;
+        for (int i = 1; i <= len; i++)
+            num[i] = nums[i-1];
+        int dp[len+2][len+2];
+        memset(dp, -1, sizeof(dp));
+        for (int l = 0; l < len; l++){
+            for (int i = 1; i + l <= len; i++){
+                int j = i + l;
+                for (int k = i; k <= j; k++){
+                    int temp = num[i-1]*num[k]*num[j+1];
+                    if (i <= k-1)
+                        temp += dp[i][k-1];
+                    if (k+1 <= j)
+                        temp += dp[k+1][j];
+                    dp[i][j] = max(dp[i][j], temp);
+                }
+            }
+        }
+        return dp[1][len];
+    }
+};
+```
+
+# Multiplication Puzzle  两端的不能取
 ```c
 // WA的原因是INF设置的太小了
 #include <iostream>
