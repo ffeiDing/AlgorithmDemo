@@ -89,3 +89,59 @@ int main(){
     return 0;
 }
 ```
+
+```c
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <algorithm>
+#include <string.h>
+#include <cmath>
+#include <cstring>
+#include <stack>
+#include <map>
+using namespace std;
+
+#define INF 0x3f3f3f3f
+
+int n, m, k, dis[1010][1010], vis[1010], d[1010];
+
+int main(){
+	cin >> k;
+	for (int j = 1; j <= k; j++){
+		memset(vis, 0, sizeof(vis));
+		memset(dis, -1, sizeof(dis));
+		memset(d, -1, sizeof(d));
+		cin >> n >> m;
+		while(m--){
+			int a, b, c;
+			cin >> a >> b >> c;
+			dis[a-1][b-1] = c;
+			dis[b-1][a-1] = dis[a-1][b-1];
+		}
+		d[0] = INF;
+		int t = n;
+		while(t--){
+			int min_num = -1;
+			int idx = -1;
+			for (int i = 0; i < n; i++){
+				if (d[i] > min_num && vis[i] == 0){
+					min_num = d[i];
+					idx = i;
+				}
+			}
+			if (idx == -1) break;
+			vis[idx] = 1;
+			for (int i = 0; i < n; i++){
+				if (dis[idx][i] != -1 && vis[i] == 0){
+					d[i] = max(d[i], min(d[idx], dis[idx][i]));
+				}
+			}
+		}
+		cout << "Scenario #" << j << ":" << endl;
+		cout << d[n-1] << endl;
+		cout << endl;
+	}
+	return 0;
+}
+```
