@@ -4,6 +4,56 @@ public:
     vector<int> findSubstring(string s, vector<string>& words) {
         if (s.empty()||words.empty()) return {};
         vector<int> res;
+        int s_len = s.length();
+        int n = words.size();
+        int len = words[0].size();
+        unordered_map<string, int> wordCnt;
+        for (int i = 0; i < n; i++)
+            wordCnt[words[i]]++;
+        for (int i = 0; i < len; i++){
+            unordered_map<string, int> strCnt;
+            int left = i, count = 0;
+            for (int j = i; j <= s_len-len; j+=len){
+                string t = s.substr(j, len);
+                if (!wordCnt.count(t)){
+                    strCnt.clear();
+                    count = 0;
+                    left = j+len;
+                }
+                else{
+                    strCnt[t]++;
+                    if (strCnt[t] <= wordCnt[t])
+                        count++;
+                    else{
+                        while(strCnt[t] > wordCnt[t]){
+                            string tmp = s.substr(left, len);
+                            left += len;
+                            if (strCnt[tmp] <= wordCnt[tmp]) count--;
+                            strCnt[tmp]--;
+                        }
+                    }
+                    if (count == n){
+                        res.push_back(left);
+                        strCnt[s.substr(left, len)]--;
+                        count--;
+                        left += len;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+
+
+
+```
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        if (s.empty()||words.empty()) return {};
+        vector<int> res;
         int n = words.size();
         int len = words[0].size();
         unordered_map<string, int> wordCnt;
