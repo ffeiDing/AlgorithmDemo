@@ -1,0 +1,30 @@
+```
+class Solution {
+public:
+    vector<vector<int>> res;
+    int vis[10010];
+    void bp(vector<int>& nums, vector<int>& path, int num){
+        if (num == nums.size()){
+            res.push_back(path);
+            return;
+        }
+        for (int i = 0; i < nums.size(); i++){
+            if (i > 0 && nums[i] == nums[i-1] && vis[i-1] == 0) continue;
+            if (vis[i] == 0){
+                vis[i] = 1;
+                path.push_back(nums[i]);
+                bp(nums, path, num+1);
+                vis[i] = 0;
+                path.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums){
+        memset(vis, 0, sizeof(vis));
+        sort(nums.begin(), nums.end());
+        vector<int> path;
+        bp(nums, path, 0);
+        return res;
+    }
+};
+```
